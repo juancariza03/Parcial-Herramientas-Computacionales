@@ -50,6 +50,7 @@ def comprarProducto():
     articulosAComprar=[]
     for i in range(cantidadArticulos):
         articulo=str(input("Ingrese el nombre del articulo que desea comprar: "))
+        rol= rol.capitalize()
         while(True):            
             if articulo in productos:
                 try:
