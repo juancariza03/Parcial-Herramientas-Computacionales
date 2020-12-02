@@ -1,0 +1,21 @@
+Errores y solución:
+1) Error: La escritura de los strings, como el nombre de los artículos o el rol de la universidad, el programa mostraba
+error si se escribía mal el texto o si no coincidia el nombre de la entrada, con el nombre que se tenía guardado.
+   Ejemplo: Cuando aparece al ejecutar el programa "ingrese su rol de universidad", si se escribía "estudiante" en vez de
+"Estudiante", aparecía un error.
+   Solución: Se agrego en las funciones que trabajan ese tipo de entradas, el método "capitalize()" para que el programa,
+solo funcione con mayúsculas y así no tenga que lidiar con este tipo de errores.
+
+2) Error: El programa al mostrar un error, cuando se le daba una entrada erronea terminaba de inmediato
+   Ejemplo: Cuando aparece ejecutar el programa "ingrese cuantos artículos desea comprar", si se escribía como entrada
+letras, el programa mostraba un error y cerraba
+   Solución: Se agrego en cada función la posibilidad de que suceda un error y que hacer cuando esto pase, siendo así,
+que si sucede algún error de ese tipo, el programa indicaría que esa entrada es inválida o no existe y se le da la
+oportunidad a el usuario de poder volver a ingresar su entrada, hasta que lo haga de manera correcta.
+
+3) Error que pudo suceder: Al ingresar un nuevo producto en la cafetería o un nuevo rol de la universidad, 
+habría que hacer cambios directamente en el código en donde están definidos los arreglos y estos cambios podrían generar
+conflictos dentro del programa al tratar de correr el programa con nuevos valores.
+   Ejemplo: Se quiere agregar el rol de "Guardia" entre los roles universitarios
+   Solución para prevenir esto: Se trabajo con funciones que recorren todo el arreglo que contiene los elementos, leyendo
+rol o articulo 1 a 1 y así siempre teniendo identificado con que se va a trabajar.
