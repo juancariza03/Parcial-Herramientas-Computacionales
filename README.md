@@ -9,11 +9,11 @@ condiciones, variables, arreglos e impresiones de texto. Aparte también se dio 
 
 ### Contrato
 
-1. Entradas: 
+1. **Entradas**: 
 	- Cédula
 	- rol
 	- artículos
-2. Salidas: 
+2. **Salidas**: 
 	- Precio cada artículo
 	- Precio total
 	- Texto compra realiza con cédula
