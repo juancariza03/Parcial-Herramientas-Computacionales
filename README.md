@@ -1,4 +1,4 @@
-## Parcial Final Herramientas Computacionales
+# Parcial Final Herramientas Computacionales
 ### Definición
 
 El algoritmo permite al usuario de la universidad adquirir un descuento en cafetería al comprar artículos
