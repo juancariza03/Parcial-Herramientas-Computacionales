@@ -12,7 +12,7 @@ condiciones, variables, arreglos e impresiones de texto. Aparte también se dio 
 1. **Entradas**: 
 	- Cedula del cliente
 	- Rol del cliente
-	- artículos que va a comprar el cliente
+	- Artículos que va a comprar el cliente
 2. **Salidas**: 
 	- Precio cada artículo
 	- Precio total
