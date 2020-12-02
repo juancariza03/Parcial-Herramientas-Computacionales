@@ -1,9 +1,17 @@
 def main():
     global productos,roles
     inicializarRoles()
-    cedula=int(input("Ingrese su cedula "))
+    while(True):
+        try:
+            cedula=int(input("Ingrese su cedula "))
+            if(cedula<1):
+                raise ValueError
+            break
+        except ValueError:
+            print("Eso no es un numero valido")
     while(True):
         rol=str(input("Ingrese su rol en la universidad "))
+        rol= rol.capitalize()
         if rol in roles:
             break
         else:
@@ -30,15 +38,28 @@ def comprarProducto():
     global productos, roles
     for i in productos:
         print(i,"......",productos[i])
-    cantidadArticulos=int(input("Cuantos articulos desea comprar? "))
+    
+    while(True):
+        try:
+            cantidadArticulos=int(input("Cuantos articulos desea comprar? "))
+            if(cantidadArticulos<1):
+                raise ValueError
+            break
+        except ValueError:
+            print("Eso no es un numero valido")
     articulosAComprar=[]
     for i in range(cantidadArticulos):
         articulo=str(input("Ingrese el nombre del articulo que desea comprar: "))
         while(True):            
             if articulo in productos:
-                cantidadDeArticulo=int(input("Ingrese la cantidad de " + articulo + " desea comprar "))
-                articulosAComprar.append([cantidadDeArticulo, articulo])
-                break
+                try:
+                    cantidadDeArticulo=int(input("Ingrese la cantidad de " + articulo + " desea comprar "))
+                    if(cantidadDeArticulo<1):
+                        raise ValueError
+                    articulosAComprar.append([cantidadDeArticulo, articulo])
+                    break
+                except ValueError:
+                    print("Eso no es un numero valido")
             else:
                 print("Este articulo no existe")
                 articulo=str(input("Ingrese el nombre del articulo que desea comprar: "))
