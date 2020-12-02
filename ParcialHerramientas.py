@@ -1,4 +1,13 @@
 def main():
+    """
+        Entrada:
+            -Cedula del cliente: Esta tiene que ser un número mayor que 0, recuerde que la cedula puede ser 000000001
+            -Rol del cliente: Este es el rol que tiene asignado el usuario, debe pertenecer al grupo de los roles definidos previamente ["Profesor", "Estudiante"]
+            -Roles del sistema (Global)
+            -Productos del sistema (Global)
+        Salida: 
+            -Precio de los productos que está adquiriendo
+    """
     global productos,roles
     inicializarRoles()
     while(True):
@@ -22,6 +31,10 @@ def main():
     obtenerPrecio(articulos, rol, cedula)
     
 def inicializarDiccionario():
+    """
+        Entradas: Productos del sistema (Global)
+        Salidas: |
+    """
     global productos
     productos["Papas"]=[1, 2500]
     productos["Gaseosa"]=[2, 2000]
@@ -31,10 +44,24 @@ def inicializarDiccionario():
     productos["Chicle"]=[6, 200]
     productos["Paleta"]=[7, 1500]
 def inicializarRoles():
+    """
+        Entrada: roles del sistema (Global)
+        #Salida: |
+    """
     global roles
     roles=["Profesor", "Estudiante"]
 
 def comprarProducto():
+    """
+        Entrada:
+            -Roles del sistema (Global)
+            -Productos del sistema (Global)
+            -Cantidad de articulos: Contiene la cantidad de articulos a comprar por el usuario, este debe ser un numero superior a 0
+            -Canditad por Articulo: Contiene las unidades del articulo a comprar por el usuario, este debe ser un numero superior a 0
+            -Articulo: Nombre del Articulo a comprar, debe pertenecer al grupo de los articulos definidos previamente ["Papas", "Gaseosa", "Perro", "Pizza", "Galletas", "Chicle", "Paleta"]
+        Salida:
+            -Articulos A Comprar: Lista que contiene todos los articulos a comprar, con su cardinalidad
+    """
     global productos, roles
     for i in productos:
         print(i,"......",productos[i])
@@ -66,6 +93,15 @@ def comprarProducto():
                 articulo=str(input("Ingrese el nombre del articulo que desea comprar: "))
     return articulosAComprar
 def obtenerPrecio(articulos, rol, cedula):
+    """
+        Entrada: 
+            -Articulos: Lista que contiene todos los articulos a comprar, con su cardinalidad
+            -Rol del cliente: Este es el rol que tiene asignado el usuario, debe pertenecer al grupo de los roles definidos previamente ["Profesor", "Estudiante"]
+            -Cedula del cliente: Esta tiene que ser un número mayor que 0, recuerde que la cedula puede ser 000000001
+        #Salida:
+            -Muestra en pantalla cuales articulos va a comprar el usaurio con sus unidades. Tambien muestra la cedula y el rol del cliente
+            -Muestra el precio total dela compra
+    """
     global productos
     if(rol=="Estudiante"):
         descuento=0.5
