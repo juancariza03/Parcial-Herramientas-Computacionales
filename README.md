@@ -10,9 +10,9 @@ condiciones, variables, arreglos e impresiones de texto. Aparte también se dio 
 ### Contrato
 
 1. **Entradas**: 
-	- Cédula
-	- rol
-	- artículos
+	- Cedula del cliente
+	- Rol del cliente
+	- artículos que va a comprar el cliente
 2. **Salidas**: 
 	- Precio cada artículo
 	- Precio total
