@@ -1,0 +1,342 @@
+%%% Template originaly created by Karol Kozioł (mail@karol-koziol.net) and modified for ShareLaTeX use
+
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+\renewcommand\familydefault{\sfdefault}
+\usepackage{tgheros}
+\usepackage[defaultmono]{droidmono}
+
+\usepackage{amsmath,amssymb,amsthm,textcomp}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{tikz}
+
+\usepackage{geometry}
+\geometry{left=25mm,right=25mm,%
+bindingoffset=0mm, top=20mm,bottom=20mm}
+
+
+\linespread{1.3}
+
+\newcommand{\linia}{\rule{\linewidth}{0.5pt}}
+
+% custom theorems if needed
+\newtheoremstyle{mytheor}
+    {1ex}{1ex}{\normalfont}{0pt}{\scshape}{.}{1ex}
+    {{\thmname{#1 }}{\thmnumber{#2}}{\thmnote{ (#3)}}}
+
+\theoremstyle{mytheor}
+\newtheorem{defi}{Definition}
+
+% my own titles
+\makeatletter
+\renewcommand{\maketitle}{
+\begin{center}
+\vspace{2ex}
+{\huge \textsc{\@title}}
+\vspace{1ex}
+\\
+\linia\\
+\@author \hfill \@date
+\vspace{4ex}
+\end{center}
+}
+\makeatother
+%%%
+
+% custom footers and headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{}
+\lfoot{Programa descuentos en cafeteria Javeriana}
+\cfoot{}
+\rfoot{Pagina \thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+%
+
+% code listing settings
+\usepackage{listings}
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    aboveskip={1.0\baselineskip},
+    belowskip={1.0\baselineskip},
+    columns=fixed,
+    extendedchars=true,
+    breaklines=true,
+    tabsize=4,
+    prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+    frame=lines,
+    showtabs=false,
+    showspaces=false,
+    showstringspaces=false,
+    keywordstyle=\color[rgb]{0.627,0.126,0.941},
+    commentstyle=\color[rgb]{0.133,0.545,0.133},
+    stringstyle=\color[rgb]{01,0,0},
+    numbers=left,
+    numberstyle=\small,
+    stepnumber=1,
+    numbersep=10pt,
+    captionpos=t,
+    escapeinside={\%*}{*)}
+}
+
+%%%----------%%%----------%%%----------%%%----------%%%
+
+\begin{document}
+
+\title{Programa descuentos en cafetería Javeriana}
+
+\author{Juan Fernando Vergara y Juan Camilo Ariza, Universidad Javeriana Cali}
+
+
+\date{1/12/2020}
+
+\maketitle
+
+\section*{Descuentos en cafeteria para estudiantes y profesores}
+
+Para recuperarse un poco del tiempo en cuarentena, las cafeterías de la universidad se encuentran dando descuentos a la comunidad estudiantil y dependiendo si es estudiante o profesor,
+tienen descuentos diferentes. Se desea saber entonces por cada compra cuánto debe pagar el usuario en caja. Para ello:
+\newline
+1) Pida por teclado la siguiente información para el cliente: cédula y rol: profesor o estudiante
+\newline
+2) Registrar el producto a comprar: código producto, cantidad de unidades y precio del producto.
+\newline
+3) Los descuentos estan dados de la siguiente forma: los estudiantes tienen un 50\% de descuento mientras que los profesores tienen un 20\% de descuento.
+
+% code from http://rosettacode.org/wiki/Fibonacci_sequence#Python
+\begin{lstlisting}[label={list:first},caption=Codigo de python para manejo de descuentos en cafeteria]
+def main():
+    global productos,roles
+    inicializarRoles()
+    while(True):
+        try:
+            cedula=int(input("Ingrese su cedula "))
+            if(cedula<1):
+                raise ValueError
+            break
+        except ValueError:
+            print("Eso no es un numero valido")
+    while(True):
+        rol=str(input("Ingrese su rol en la universidad "))
+        rol= rol.capitalize()
+        if rol in roles:
+            break
+        else:
+            print("Este rol no existe")
+    productos= dict()
+    inicializarDiccionario()
+    articulos=comprarProducto()
+    obtenerPrecio(articulos, rol, cedula)
+    
+def inicializarDiccionario():
+    global productos
+    productos["Papas"]=[1, 2500]
+    productos["Gaseosa"]=[2, 2000]
+    productos["Perro"]=[3, 5000]
+    productos["Pizza"]=[4, 6000]
+    productos["Galletas"]=[5, 1200]
+    productos["Chicle"]=[6, 200]
+    productos["Paleta"]=[7, 1500]
+def inicializarRoles():
+    global roles
+    roles=["Profesor", "Estudiante"]
+
+def comprarProducto():
+    global productos, roles
+    for i in productos:
+        print(i,"......",productos[i])
+    
+    while(True):
+        try:
+            cantidadArticulos=int(input("Cuantos articulos desea comprar? "))
+            if(cantidadArticulos<1):
+                raise ValueError
+            break
+        except ValueError:
+            print("Eso no es un numero valido")
+    articulosAComprar=[]
+    for i in range(cantidadArticulos):
+        articulo=str(input("Ingrese el nombre del articulo que desea comprar: "))
+        articulo= articulo.capitalize()
+        while(True):            
+            if articulo in productos:
+                try:
+                    cantidadDeArticulo=int(input("Ingrese la cantidad de " + articulo + " desea comprar "))
+                    if(cantidadDeArticulo<1):
+                        raise ValueError
+                    articulosAComprar.append([cantidadDeArticulo, articulo])
+                    break
+                except ValueError:
+                    print("Eso no es un numero valido")
+            else:
+                print("Este articulo no existe")
+                articulo=str(input("Ingrese el nombre del articulo que desea comprar: "))
+    return articulosAComprar
+def obtenerPrecio(articulos, rol, cedula):
+    global productos
+    if(rol=="Estudiante"):
+        descuento=0.5
+    elif(rol=="Profesor"):
+        descuento=0.8
+    total=0
+    for i in articulos:
+        codigo=productos[i[1]][0]
+        precioArticulo=productos[i[1]][1] * descuento
+        cantidadDeArticulo=i[0]
+        precio= precioArticulo*cantidadDeArticulo
+        print("El", rol, "con cedula", cedula,", debe pagar", precioArticulo, "por el producto", codigo, "y son", cantidadDeArticulo, "unidades, para un total de", precio)
+        total+=precio
+    print("El precio total es:", total)
+main()
+\end{lstlisting}
+
+Revisando Listing~\ref{list:first}\ldots{} 
+Tenemos el código completo del programa creado para solución al problema principal. Se utilizó varias funciones para poder trabajar los requisitos que se pedían del programa y una función main que se encarga de ejecutar el programa de una manera correcta utilizando las funciones definidas previamente. También se trabajó el manejo de errores en el código para los errores que puedan surgir durante la ejecución.
+
+\section*{Funciones}
+
+\begin{lstlisting}[label={list:second},caption=inicializarDiccionario()]
+def inicializarDiccionario():
+    global productos
+    productos["Papas"]=[1, 2500]
+    productos["Gaseosa"]=[2, 2000]
+    productos["Perro"]=[3, 5000]
+    productos["Pizza"]=[4, 6000]
+    productos["Galletas"]=[5, 1200]
+    productos["Chicle"]=[6, 200]
+    productos["Paleta"]=[7, 1500]
+\end{lstlisting}
+
+Esta función define el arreglo que va a contener todos los artículos que se van a poder comprar en la cafetería
+
+\begin{lstlisting}[label={list:third},caption=inicializarRoles()]
+def inicializarRoles():
+    global roles
+    roles=["Profesor", "Estudiante"]
+
+\end{lstlisting}
+
+Esta función define el arreglo que va a contener todos los roles de la universidad.
+
+\begin{lstlisting}[label={list:fourth},caption=comprarProducto()]
+def comprarProducto():
+    global productos, roles
+    for i in productos:
+        print(i,"......",productos[i])
+    
+    while(True):
+        try:
+            cantidadArticulos=int(input("Cuantos articulos desea comprar? "))
+            if(cantidadArticulos<1):
+                raise ValueError
+            break
+        except ValueError:
+            print("Eso no es un numero valido")
+    articulosAComprar=[]
+    for i in range(cantidadArticulos):
+        articulo=str(input("Ingrese el nombre del articulo que desea comprar: "))
+        articulo= articulo.capitalize()
+        while(True):            
+            if articulo in productos:
+                try:
+                    cantidadDeArticulo=int(input("Ingrese la cantidad de " + articulo + " desea comprar "))
+                    if(cantidadDeArticulo<1):
+                        raise ValueError
+                    articulosAComprar.append([cantidadDeArticulo, articulo])
+                    break
+                except ValueError:
+                    print("Eso no es un numero valido")
+            else:
+                print("Este articulo no existe")
+                articulo=str(input("Ingrese el nombre del articulo que desea comprar: "))
+    return articulosAComprar
+    
+\end{lstlisting}
+
+Esta función define cual es el procedimiento y análisis que debe hacer el programa para realizar la compra de un producto, verificando los productos que existen, la cantidad de productos que se quieren comprar, el nombre del producto que se quiere comprar y el manejo de errores en caso de una entrada erronea de parte del usuario.
+
+\begin{lstlisting}[label={list:fifth},caption=obtenerPrecio()]
+def obtenerPrecio(articulos, rol, cedula):
+    global productos
+    if(rol=="Estudiante"):
+        descuento=0.5
+    elif(rol=="Profesor"):
+        descuento=0.8
+    total=0
+    for i in articulos:
+        codigo=productos[i[1]][0]
+        precioArticulo=productos[i[1]][1] * descuento
+        cantidadDeArticulo=i[0]
+        precio= precioArticulo*cantidadDeArticulo
+        print("El", rol, "con cedula", cedula,", debe pagar", precioArticulo, "por el producto", codigo, "y son", cantidadDeArticulo, "unidades, para un total de", precio)
+        total+=precio
+    print("El precio total es:", total)
+\end{lstlisting}
+
+Esta función permite obtener el precio total de la compra realizada por el usuario. La función recibe como entrada los articulos, el rol del usuario y su cédula para poder ejecutarse y hacer su respectivo cálculo. Al final retorna un texto indicando el rol del usuario, su cédula, la cantidad de artículos que va a comprar y el precio de cada artículo, y el total de toda la compra.
+
+\begin{lstlisting}[label={list:sixth},caption=main()]
+
+def main():
+    global productos,roles
+    inicializarRoles()
+    while(True):
+        try:
+            cedula=int(input("Ingrese su cedula "))
+            if(cedula<1):
+                raise ValueError
+            break
+        except ValueError:
+            print("Eso no es un numero valido")
+    while(True):
+        rol=str(input("Ingrese su rol en la universidad "))
+        rol= rol.capitalize()
+        if rol in roles:
+            break
+        else:
+            print("Este rol no existe")
+    productos= dict()
+    inicializarDiccionario()
+    articulos=comprarProducto()
+    obtenerPrecio(articulos, rol, cedula)
+
+\end{lstlisting}
+
+Esta es la función base de nuestro programa que se encagar de hacer llamado a todas las demás funciones para hacer que el programa funcione de manera correcta.
+
+\section*{Imágenes del repositorio}
+
+\begin{figure}[h]
+Repositorio en github:
+\includegraphics[width=\textwidth]{1.png}
+\centering
+\end{figure}
+
+\begin{figure}[h]
+Errores y solución:
+\includegraphics[width=\textwidth]{2.png}
+\centering
+\end{figure}
+
+\begin{figure}[h]
+README:
+\includegraphics[width=\textwidth]{3.png}
+\centering
+\end{figure}
+
+\begin{figure}[h]
+Documentación:
+\includegraphics[width=\textwidth]{4.png}
+\centering
+\end{figure}
+\end{document}
